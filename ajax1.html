@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <title>Crash course ajax </title>
+</head>
+<body>
+    <h1>Hello Ajax</h1>
+    <button id="button">click button</button>
+    <p id="text"></p>
+
+
+
+    <script>
+
+        document.getElementById('button').addEventListener
+        ('click', loadText);
+
+        function loadText()
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open({ type: 'GET', url: 'sample.txt', async: true, crossDomain:true, });
+            // =====================
+            // xhr.onload = function()
+            // {
+            //     if(this.status==200)
+            //     {
+            //      console.log(this.responseText);
+            //     }
+            // }
+            // ======================
+            xhr.onreadystatechange = function(){
+                if(this.readystate == 4 && this.status == 200)
+                {
+                    document.getElementById('text').innerHTML=this.responseText;
+                    // console.log(this.responseText);
+                }else if (this.status == 404)
+                {
+                    document.getElementById('text').innerHTML="result not found";
+                }
+            }
+            xhr.onerror = function(){
+                document.getElementById('text').innerHTML="<h2>sorry there is some Error in your file</h2>";
+                // console.log("An error message is here");
+            }
+            xhr.send();
+           
+        }
+    </script>
+</body>
+</html>
